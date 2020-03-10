@@ -12,6 +12,7 @@ CREATE TABLE PURCHASE
 			ON DELETE CASCADE );
 
 
+
 CREATE TABLE PAYMENT
 ( payment_id INT	NOT NULL,
   amount_spent	FLOAT(10,2)	NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE PURCHASE_PAYMENT
    amount_spent FLOAT(10,2)	NOT NULL,
    CONSTRAINT PURCPAYPK
 		PRIMARY KEY(purchase_payment_id, confirmation_no),
-	CONSTRAINT PURCHPAYFK
+   CONSTRAINT PURCHPAYFK
 		FOREIGN KEY(confirmation_no) REFERENCES PURCHASE (confirmation_no)
 				ON DELETE CASCADE
 );
@@ -74,7 +75,7 @@ CREATE TABLE PURCHASE_DETAILS
    comment_id INT NOT NULL,
    CONSTRAINT PUR_DET 
 		PRIMARY KEY(purchase_payment_id, confirmation_no),
-	CONSTRAINT PUR_DET_FK
+   CONSTRAINT PUR_DET_FK
 		FOREIGN KEY(purchase_payment_id) REFERENCES PURCHASE_PAYMENT(purchase_payment_id)
 				ON DELETE CASCADE,
 		FOREIGN KEY(confirmation_no) REFERENCES PURCHASE(confirmation_no)
