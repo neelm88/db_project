@@ -40,6 +40,7 @@ VALUES
     ("Yovonnda Clemanceau","yclemanceau10@themeforest.net"),
     ("Bertine Francescuccio","bfrancescuccio11@hatena.ne.jp"),
     ("Cletus Butterfill","cbutterfill12@w3.org");
+	
 INSERT INTO SELLER
     (email,bio,photo)
 VALUES
@@ -86,7 +87,6 @@ VALUES
 INSERT INTO STORE
     (seller_email,name,banner,description)
 VALUES
-    ("email","StoreName","BannerImage","Description"),
     ("tlongmead0@epa.gov","Goyette Group","http://dummyimage.com/941x483.jpg/ff4444/ffffff","Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst."),
     ("gcordelle1@fastcompany.com","Vandervort, Beier and Mraz","http://dummyimage.com/919x405.jpg/ff4444/ffffff","Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis."),
     ("bstutely2@forbes.com","Bogisich and Sons","http://dummyimage.com/1067x318.jpg/ff4444/ffffff","Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit."),
