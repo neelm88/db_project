@@ -1,26 +1,30 @@
 CREATE TABLE [USER](
     email VARCHAR(80) NOT NULL,
     name VARCHAR(60),
-    address VARCHAR(60) NOT NULL,
-    phone_number INT NOT NULL,
+    address VARCHAR(60),
+    phone_number INT,
     CONSTRAINT USERPRIMKEY
         PRIMARY KEY(email)
 );
 
 CREATE TABLE SELLER(
-    email VARCHAR(80),
+    email VARCHAR(80) NOT NULL,
     bio VARCHAR(255),
     photo VARCHAR(120) DEFAULT "dummy.img",
+    CONSTRAINT SELLPK
+        PRIMARY KEY(email),
     CONSTRAINT SELLFK
-        FOREIGN KEY(email) REFERENCES BUYER(Email)
+        FOREIGN KEY(email) REFERENCES [USER](email)
             ON UPDATE CASCADE
 );
 
 CREATE TABLE BUYER(
     email VARCHAR(80),
     karma_points INT NOT NULL DEFAULT 0,
+    CONSTRAINT BUYPK
+        PRIMARY KEY(email),
     CONSTRAINT BUYFK
-        FOREIGN KEY(email) REFERENCES BUYER(Email)
+        FOREIGN KEY(email) REFERENCES [USER](email)
             ON UPDATE CASCADE
 );
 
@@ -29,7 +33,7 @@ CREATE TABLE WISH(
     email VARCHAR(80) NOT NULL,
     product_id INT NOT NULL,
     CONSTRAINT WISHFK
-        FOREIGN KEY(email) REFERENCES BUYER(Email)
+        FOREIGN KEY(email) REFERENCES BUYER(email)
 );
 
 CREATE TABLE STORE(
@@ -38,9 +42,9 @@ CREATE TABLE STORE(
     description VARCHAR(255),
     banner VARCHAR(255) NOT NULL DEFAULT "dummybanner.img",
     CONSTRAINT STOREPK
-        PRIMARY KEY(NAME),
+        PRIMARY KEY(name),
     CONSTRAINT STOREFK
-        FOREIGN KEY(seller_email) REFERENCES INVENTORY(store_name)
+        FOREIGN KEY(seller_email) REFERENCES SELLER(email)
 );
 
 CREATE TABLE URL(
@@ -52,15 +56,15 @@ CREATE TABLE URL(
 
 CREATE TABLE INVENTORY
 (	product_id INT NOT NULL,
-	quantity INT NOT NULL,
+	quantity INT NOT NULL DEFAULT 256,
 	file_type VARCHAR(16) NOT NULL,
-	file_size VARCHAR(16) NOT NULL,
+	file_size VARCHAR(16),
 	description VARCHAR(512) NOT NULL,
 	buying_price FLOAT(10,2) NOT NULL,
 	title VARCHAR(64) NOT NULL,
 	store_name VARCHAR(64),
 	download_URL VARCHAR(2048) NOT NULL,
-	is_for_sale BOOLEAN NOT NULL DEFAULT true,
+	is_for_sale BOOLEAN NOT NULL DEFAULT TRUE,
 	CONSTRAINT INVPK
 		PRIMARY KEY(product_id),
 	CONSTRAINT INVSTOREFK
