@@ -199,13 +199,11 @@ CREATE TABLE PURCHASE_DETAILS
    confirmation_no INT NOT NULL,
    quantity INT	NOT NULL,
    product_id INT NOT NULL,
-   comment_id INT NOT NULL,
+   comment_id INT,
    CONSTRAINT PUR_DET 
 		PRIMARY KEY(purchase_payment_id, confirmation_no),
    CONSTRAINT PUR_DET_FK
-		FOREIGN KEY(purchase_payment_id) REFERENCES PURCHASE_PAYMENT(purchase_payment_id)
-				ON DELETE CASCADE,
-		FOREIGN KEY(confirmation_no) REFERENCES PURCHASE(confirmation_no)
+		FOREIGN KEY(purchase_payment_id, confirmation_no) REFERENCES PURCHASE_PAYMENT(purchase_payment_id,confirmation_no)
 				ON DELETE CASCADE,
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
 				ON DELETE SET NULL,
