@@ -576,3 +576,51 @@ VALUES
 (5101527,891588277,140,209),
 (7449557,834084780,57,11),
 (5501763,288317331,1,11);
+
+INSERT INTO FEEDBACK
+(comment_id,rating,comment,comment_time,product_id,email)
+VALUES
+(34571, 1, 'Praesent eu nulla at sem molestie sodales. Mauris', '2/5/20 3:28', 11, 'peggar10@apache.org'),
+(34918, 4, 'lobortis risus. In mi pede, nonummy', '2/28/20 3:49', 628, 'hhobble4@hao123.com'),
+(16691, 1, 'ornare,', '1/9/20 12:56', 941, 'akitcher7@list-manage.com'),
+(25561, 1, 'parturient montes, nascetur ridiculus mus. Donec dignissim magna a tortor.', '2/19/20 23:35', 249, 'dyarham2@latimes.com'),
+(43093, 1, 'neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris', '2/27/20 3:11', 926, 'wviggars3@fema.gov'),
+(37200, 5, 'dis parturient montes, nascetur', '3/14/20 16:54', 831, 'bplacide9@delicious.com'),
+(19925, 0, 'at, egestas a, scelerisque sed,', '2/2/20 5:30', 936, 'isenussi5@creativecommons.org'),
+(31550, 2, 'massa lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit', '1/17/20 23:45', 572, 'yduferiev@dion.ne.jp'),
+(21762, 0, 'Morbi neque tellus, imperdiet non, vestibulum nec,', '1/6/20 21:08', 851, 'mlettyn@comcast.net'),
+(26757, 4, 'tellus non magna.', '2/6/20 11:06', 990, 'bsitford11@uiuc.edu'),
+(27608, 5, 'nostra,', '3/15/20 7:56', 952, 'ybroscho@angelfire.com'),
+(27885, 3, 'Vivamus euismod urna. Nullam lobortis quam a', '1/28/20 0:10', 19, 'pjobbinst@sphinn.com'),
+(37902, 4, 'est, mollis non, cursus', '1/30/20 7:16', 201, 'pbaddeleys@example.com'),
+(19341, 3, 'Donec', '1/19/20 17:55', 942, 'llemerief@boston.com'),
+(32968, 3, 'neque. In ornare sagittis', '3/11/20 3:11', 897, 'gmclugishm@answers.com'),
+(42652, 3, 'vestibulum, neque sed dictum eleifend, nunc risus', '3/3/20 2:02', 983, 'jwickersleyu@stumbleupon.com'),
+(29224, 0, 'ipsum cursus vestibulum. Mauris magna. Duis dignissim', '2/13/20 3:34', 376, 'mummfreyb@mac.com'),
+(15893, 0, 'Quisque varius.', '1/28/20 7:25', 256, 'broxburghh@youtu.be'),
+(31601, 4, 'malesuada malesuada. Integer id magna et ipsum cursus vestibulum. Mauris', '1/29/20 11:46', 403, 'rgonzalezz@livejournal.com'),
+(38415, 3, 'semper. Nam tempor diam dictum sapien. Aenean massa. Integer', '2/15/20 13:49', 209, 'balimana@patch.com');
+
+INSERT INTO WISH
+(wish_number,email,product_id)
+VALUES
+(494799, 'balimana@patch.com', 256),
+(98061, 'bplacide9@delicious.com', 936),
+(706662, 'pbaddeleys@example.com', 657),
+(538349, 'hhobble4@hao123.com', 926),
+(545190, 'livanyushkin12@canalblog.com', 188),
+(622886, 'dbeethamy@xing.com', 897),
+(685360, 'bchooterl@bravesites.com', 930),
+(396044, 'broxburghh@youtu.be', 122),
+(7900, 'pjobbinst@sphinn.com', 172),
+(588840, 'hscad8@angelfire.com', 127),
+(47697, 'llemerief@boston.com', 242),
+(269555, 'gmillionsg@nps.gov', 12),
+(60670, 'gmclugishm@answers.com', 759),
+(613391, 'ecosgrover@about.com', 957),
+(274103, 'ltrythallq@msu.edu', 402),
+(370486, 'ebrasier6@cnet.com', 572),
+(579747, 'bsitford11@uiuc.edu', 851),
+(87738, 'wviggars3@fema.gov', 19),
+(659767, 'jwickersleyu@stumbleupon.com', 831),
+(239231, 'mlettyn@comcast.net', 394);
