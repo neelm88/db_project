@@ -755,28 +755,28 @@ VALUES
     (209,2020-10-15,59.00,"8 weeks"),
     (188,2016-07-27,89.00,"9 months");
 INSERT INTO IMAGE
-    (image_id,product_id,image_file)
+    (product_id,image_file)
 VALUES
-    (1,990,"http://dummyimage.com/363x314.jpg/ff4444/ffffff"),
-    (2,12,"http://dummyimage.com/297x486.jpg/cc0000/ffffff"),
-    (3,572,"http://dummyimage.com/349x445.jpg/5fa2dd/ffffff"),
-    (4,942,"http://dummyimage.com/461x302.jpg/ff4444/ffffff"),
-    (5,495,"http://dummyimage.com/260x486.jpg/5fa2dd/ffffff"),
-    (6,703,"http://dummyimage.com/340x266.jpg/cc0000/ffffff"),
-    (7,930,"http://dummyimage.com/317x483.jpg/dddddd/000000"),
-    (8,628,"http://dummyimage.com/486x252.jpg/dddddd/000000"),
-    (9,376,"http://dummyimage.com/280x489.jpg/ff4444/ffffff"),
-    (10,122,"http://dummyimage.com/457x282.jpg/cc0000/ffffff"),
-    (11,249,"http://dummyimage.com/469x284.jpg/dddddd/000000"),
-    (12,759,"http://dummyimage.com/277x366.jpg/ff4444/ffffff"),
-    (13,229,"http://dummyimage.com/463x441.jpg/5fa2dd/ffffff"),
-    (14,19,"http://dummyimage.com/410x372.jpg/5fa2dd/ffffff"),
-    (15,402,"http://dummyimage.com/389x361.jpg/ff4444/ffffff"),
-    (16,983,"http://dummyimage.com/467x320.jpg/cc0000/ffffff"),
-    (17,403,"http://dummyimage.com/377x281.jpg/dddddd/000000"),
-    (18,936,"http://dummyimage.com/322x500.jpg/5fa2dd/ffffff"),
-    (19,127,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff"),
-    (20,941,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff");
+    (990,"http://dummyimage.com/363x314.jpg/ff4444/ffffff"),
+    (12,"http://dummyimage.com/297x486.jpg/cc0000/ffffff"),
+    (572,"http://dummyimage.com/349x445.jpg/5fa2dd/ffffff"),
+    (942,"http://dummyimage.com/461x302.jpg/ff4444/ffffff"),
+    (495,"http://dummyimage.com/260x486.jpg/5fa2dd/ffffff"),
+    (703,"http://dummyimage.com/340x266.jpg/cc0000/ffffff"),
+    (930,"http://dummyimage.com/317x483.jpg/dddddd/000000"),
+    (628,"http://dummyimage.com/486x252.jpg/dddddd/000000"),
+    (376,"http://dummyimage.com/280x489.jpg/ff4444/ffffff"),
+    (122,"http://dummyimage.com/457x282.jpg/cc0000/ffffff"),
+    (249,"http://dummyimage.com/469x284.jpg/dddddd/000000"),
+    (759,"http://dummyimage.com/277x366.jpg/ff4444/ffffff"),
+    (229,"http://dummyimage.com/463x441.jpg/5fa2dd/ffffff"),
+    (19,"http://dummyimage.com/410x372.jpg/5fa2dd/ffffff"),
+    (402,"http://dummyimage.com/389x361.jpg/ff4444/ffffff"),
+    (983,"http://dummyimage.com/467x320.jpg/cc0000/ffffff"),
+    (403,"http://dummyimage.com/377x281.jpg/dddddd/000000"),
+    (936,"http://dummyimage.com/322x500.jpg/5fa2dd/ffffff"),
+    (127,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff"),
+    (941,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff");
 
 
 
