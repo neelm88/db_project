@@ -624,3 +624,181 @@ VALUES
 (87738, 'wviggars3@fema.gov', 19),
 (659767, 'jwickersleyu@stumbleupon.com', 831),
 (239231, 'mlettyn@comcast.net', 394);
+
+INSERT INTO IP_TYPE
+    (word)
+VALUES
+    ("frame"),
+    ("encompassing"),
+    ("synergy"),
+    ("standardization"),
+    ("flexibility"),
+    ("executive"),
+    ("Persistent"),
+    ("budgetary management"),
+    ("mission-critical"),
+    ("bifurcated"),
+    ("Integrated"),
+    ("leverage"),
+    ("composite"),
+    ("web-enabled"),
+    ("full-range"),
+    ("collaboration"),
+    ("Intuitive"),
+    ("hybrid"),
+    ("non-volatile"),
+    ("5th generation"),
+    ("migration"),
+    ("matrix"),
+    ("Monitored"),
+    ("encoding"),
+    ("interactive"),
+    ("systemic"),
+    ("knowledge base"),
+    ("24 hour"),
+    ("background"),
+    ("website"),
+    ("Fully-configurable"),
+    ("Realigned"),
+    ("Future-proofed"),
+    ("User-centric"),
+    ("optimal"),
+    ("logistical"),
+    ("open system");
+
+INSERT INTO PRODUCT_KEYWORD
+    (product_id,word)
+VALUES
+    (491,"frame"),
+    (174,"encompassing"),
+    (180,"synergy"),
+    (203,"standardization"),
+    (108,"flexibility"),
+    (435,"executive"),
+    (4,"Persistent"),
+    (434,"budgetary management"),
+    (340,"mission-critical"),
+    (459,"bifurcated"),
+    (421,"Integrated"),
+    (261,"leverage"),
+    (261,"composite"),
+    (339,"web-enabled"),
+    (194,"full-range"),
+    (400,"collaboration"),
+    (264,"Intuitive"),
+    (116,"hybrid"),
+    (248,"non-volatile"),
+    (89,"standardization"),
+    (384,"5th generation"),
+    (379,"migration"),
+    (220,"matrix"),
+    (13,"Monitored"),
+    (19,"encoding"),
+    (174,"interactive"),
+    (224,"systemic"),
+    (278,"knowledge base"),
+    (474,"24 hour"),
+    (386,"background"),
+    (182,"website"),
+    (385,"Fully-configurable"),
+    (304,"Realigned"),
+    (198,"Future-proofed"),
+    (144,"User-centric"),
+    (487,"optimal"),
+    (242,"logistical"),
+    (438,"User-centric"),
+    (414,"open system");
+
+INSERT INTO SUBSCRIPTION
+    (product_id,subscription_type,start_date,price)
+VALUES
+    (990,"Monthly",2017-04-16,173.00),
+    (403,"Yearly",2017-02-08,97.00),
+    (19,"Weekly",2016-09-14,76.00),
+    (229,"Yearly",2020-03-26,173.00),
+    (930,"Monthly",2020-08-09,143.00),
+    (572,"Weekly",2020-11-14,150.00),
+    (256,"Yearly",2017-06-22,30.00),
+    (495,"Monthly",2017-07-18,125.00),
+    (402,"Yearly",2016-09-28,10.00),
+    (376,"Weekly",2018-07-28,62.00),
+    (122,"Monthly",2016-01-05,63.00),
+    (172,"Yearly",2019-08-14,44.00),
+    (12,"Weekly",2016-12-08,86.00),
+    (628,"Monthly",2016-04-12,28.00),
+    (894,"Yearly",2020-11-26,136.00),
+    (942,"Yearly",2018-02-15,193.00),
+    (209,"Weekly",2020-09-06,29.00),
+    (831,"Monthly",2017-07-06,137.00),
+    (851,"Weekly",2017-04-16,143.00),
+    (957,"Monthly",2016-10-06,113.00);
+INSERT INTO RENTAL
+    (product_id,start_date,price,duration)
+VALUES
+    (894,2020-11-28,72.00,"7 weeks"),
+    (229,2018-07-12,53.00,"6 months"),
+    (201,2018-05-16,120.00,"1 years"),
+    (376,2018-02-21,94.00,"9 weeks"),
+    (242,2016-02-25,65.00,"7 months"),
+    (572,2019-05-31,87.00,"1 years"),
+    (936,2016-09-16,115.00,"10 weeks"),
+    (490,2019-06-22,88.00,"6 months"),
+    (402,2017-09-24,44.00,"5 years"),
+    (12,2019-05-06,99.00,"10 weeks"),
+    (11,2020-11-21,127.00,"7 months"),
+    (926,2016-09-13,130.00,"2 years"),
+    (394,2020-07-24,64.00,"3 weeks"),
+    (759,2019-06-29,17.00,"6 months"),
+    (831,2020-01-18,77.00,"5 years"),
+    (19,2018-07-16,139.00,"1 weeks"),
+    (127,2019-09-07,188.00,"10 months"),
+    (122,2020-09-01,85.00,"2 years"),
+    (209,2020-10-15,59.00,"8 weeks"),
+    (188,2016-07-27,89.00,"9 months");
+INSERT INTO IMAGE
+    (image_id,product_id,image_file)
+VALUES
+    (1,990,"http://dummyimage.com/363x314.jpg/ff4444/ffffff"),
+    (2,12,"http://dummyimage.com/297x486.jpg/cc0000/ffffff"),
+    (3,572,"http://dummyimage.com/349x445.jpg/5fa2dd/ffffff"),
+    (4,942,"http://dummyimage.com/461x302.jpg/ff4444/ffffff"),
+    (5,495,"http://dummyimage.com/260x486.jpg/5fa2dd/ffffff"),
+    (6,703,"http://dummyimage.com/340x266.jpg/cc0000/ffffff"),
+    (7,930,"http://dummyimage.com/317x483.jpg/dddddd/000000"),
+    (8,628,"http://dummyimage.com/486x252.jpg/dddddd/000000"),
+    (9,376,"http://dummyimage.com/280x489.jpg/ff4444/ffffff"),
+    (10,122,"http://dummyimage.com/457x282.jpg/cc0000/ffffff"),
+    (11,249,"http://dummyimage.com/469x284.jpg/dddddd/000000"),
+    (12,759,"http://dummyimage.com/277x366.jpg/ff4444/ffffff"),
+    (13,229,"http://dummyimage.com/463x441.jpg/5fa2dd/ffffff"),
+    (14,19,"http://dummyimage.com/410x372.jpg/5fa2dd/ffffff"),
+    (15,402,"http://dummyimage.com/389x361.jpg/ff4444/ffffff"),
+    (16,983,"http://dummyimage.com/467x320.jpg/cc0000/ffffff"),
+    (17,403,"http://dummyimage.com/377x281.jpg/dddddd/000000"),
+    (18,936,"http://dummyimage.com/322x500.jpg/5fa2dd/ffffff"),
+    (19,127,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff"),
+    (20,941,"http://dummyimage.com/329x348.jpg/5fa2dd/ffffff");
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+
