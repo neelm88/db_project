@@ -1,0 +1,5 @@
+CREATE INDEX stores
+ON INVENTORY (store_name);
+
+CREATE INDEX words
+ON PRODUCT_KEYWORD (word);
