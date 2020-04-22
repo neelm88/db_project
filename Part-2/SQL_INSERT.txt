@@ -1,0 +1,8 @@
+-- SQL INSERT 
+
+Instructions to load the data into database tables.
+
+1. Open the seed_data.txt file
+2. Make sure that the scripts in the SQL_CREATE file have already been executed to create tables, indexes, and
+views 
+3. Run the scripts in the seed_data.txt file to populate the tables and views 

@@ -1,0 +1,149 @@
+-- SQL INSERT/DELETE 
+
+-- Contains all of the sample INSERT and DELETE statements provided in the user manual
+
+
+
+-- Sample INSERTs
+
+
+-- Adding new items
+
+BEGIN TRANSACTION;
+	INSERT OR ROLLBACK INTO INVENTORY		
+		(product_id, quantity, file_type, file_size, description, buying_price, title, 		store_name, download_URL, is_for_sale)
+	VALUES
+    		(1004,40,'asm',744,'Adaptive 5th generation matrices',68.82,'Veribet',
+		'Kassulke', 'http://t.co/vestibulum/proin/eu/mi/nulla.js',1);
+
+
+	INSERT OR ROLLBACK INTO IMAGE (product_id, image_file)
+	SELECT * FROM (SELECT 1004,"http://dumyimage.com/363x314.jpg/ff4444/ffffff" )
+	WHERE (
+		SELECT COUNT(image_file) 
+		FROM IMAGE AS I
+		GROUP BY product_id
+	) < 5;
+
+	INSERT OR ROLLBACK INTO RENTAL 
+		    (product_id,start_date,price,duration)
+	VALUES
+		(1004,2020-11-28,72.00,"7 weeks");
+		
+	INSERT OR ROLLBACK INTO SUBSCRIPTION 
+		  (product_id,subscription_type,start_date,price)
+	VALUES
+		(1004,"Monthly",2017-04-16,173.00);
+COMMIT; 
+
+
+
+-- Adding sellers
+
+BEGIN TRANSACTION;
+	INSERT OR ROLLBACK INTO USER 
+		(email, name,address, phone_number)
+	VALUES
+    		("qiu.374@osu.edu","Sharon Qiu",
+"2840 E. Orange Road, Lewis Center, OH 43035","123-456-7890");
+	INSERT OR ROLLBACK INTO SELLER 
+		(email, bio, photo)
+	VALUES
+("qiu.374@osu.edu","local clown",	"https://pbs.twimg.com/media/EOmR6fZVAAAjxWT.jpg");
+COMMIT;
+
+
+
+-- Adding buyers
+
+BEGIN TRANSACTION;
+	INSERT OR ROLLBACK INTO USER 
+(email, name,address, phone_number)
+	VALUES 
+("dandu.7@osu.edu","Sri Ramya Dandu", "2840 E. Orange Road, Lewis Center, OH 43035","123-456-7890");
+	INSERT OR ROLLBACK INTO BUYER
+		(email, karma_points)
+	VALUES
+		("dandu.7@osu.edu",1);
+COMMIT;
+
+BEGIN TRANSACTION;
+	INSERT OR ROLLBACK INTO USER 
+(email, name,address, phone_number)
+	VALUES 
+("mansukhani.9@osu.edu","Neel Mansukhani", "2840 E. Orange Road, Lewis Center, OH 43035","123-456-7890");
+	INSERT OR ROLLBACK INTO BUYER
+		(email, karma_points)
+	VALUES
+		("mansukhani.9@osu.edu",10000000000000);
+COMMIT;
+
+
+
+-- Adding new order 
+
+BEGIN TRANSACTION;
+	INSERT OR ROLLBACK INTO PAYMENT_METHOD
+		(payment_id)
+	VALUES
+		(6666666666666666666);
+		
+	INSERT OR ROLLBACK INTO KARMA_POINTS
+		(payment_id)
+	VALUES
+		(6666666666666666666);
+		
+	INSERT OR ROLLBACK INTO PURCHASE
+		(confirmation_no,receiver_email,gift,buyer_email,payment_id, purchase_date)
+	VALUES
+		(111113750375111,"dandu.7@osu.edu",1,"mansukhani.9@osu.edu",6666666666666666666,"04/21/2020 01:00");
+	INSERT OR ROLLBACK INTO PURCHASE_PAYMENT
+		(purchase_payment_id,confirmation_no,amount_spent)
+	VALUES
+		(112342434,111113750375111,1000000);
+		
+	INSERT OR ROLLBACK INTO PURCHASE_DETAILS
+		(purchase_payment_id, confirmation_no,quantity,product_id)
+	VALUES
+		(112342434,111113750375111,1,1004);
+		
+	UPDATE OR ROLLBACK BUYER
+	SET karma_points = karma_points - 1000000
+	WHERE email="mansukhani.9@osu.edu";
+COMMIT;
+
+
+
+
+
+-- Sample DELETEs
+
+
+-- Deleting items
+	DELETE FROM INVENTORY WHERE product_id=1003;
+	
+	
+-- Deleting order 
+
+DELETE FROM PURCHASE WHERE confirmation_no=111113750375111;
+
+
+-- Deleting sellers
+
+BEGIN TRANSACTION;
+		
+		DELETE FROM USER 
+  		WHERE email = "qiu.374@osu.edu" ;
+	
+COMMIT;
+
+
+-- Deleting buyers
+
+BEGIN TRANSACTION;
+		
+	DELETE FROM USER 
+  	WHERE email = "dandu.7@osu.edu" ;
+	
+COMMIT;
+			

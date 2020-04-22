@@ -1,0 +1,299 @@
+-- SQL QUERIES
+
+-- Contains Simple Queries, Extra Queries, and Advanced Queries
+
+-- Simple Queries 
+-- Finds the titles of all IP Items by a given Seller that cost less than $10
+SELECT 
+        title
+FROM 
+        INVENTORY AS INV, STORE AS ST
+WHERE 
+        ST.name = INV.store_name AND ST.seller_email = 'tlongmead0@epa.gov' AND buying_price <= 10;
+
+
+-- Gives all the titles and their dates of purchase made by given buyer
+SELECT 
+        title, purchase_date
+FROM
+        PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+WHERE
+        P.buyer_email = 'hhobble4@hao123.com';
+
+
+
+
+-- Finds the seller names for all sellers with less than 5 IP Items for sale
+SELECT 
+        name
+FROM 
+        STORE AS ST
+WHERE 
+         (SELECT 
+                COUNT(product_id)
+         FROM 
+        SELLER AS S 
+        INNER JOIN STORE AS ST ON S.email = ST.seller_email 
+        INNER JOIN INVENTORY AS INV ON INV.store_name = ST.name
+GROUP BY S.email
+) < 5;
+
+
+-- Gives all the buyers who purchased a IP Item by a given seller 
+-- and the names of the IP Items they purchased.
+SELECT 
+        email, title
+FROM 
+        BUYER AS B
+        INNER JOIN PURCHASE AS P ON B.email = P.buyer_email 
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no 
+        INNER JOIN INVENTORY AS INV on PD.product_id = INV.product_id
+WHERE 
+        INV.store_name IN 
+        (SELECT 
+                DISTINCT(name)
+        FROM 
+                INVENTORY AS INV, STORE AS ST, SELLER AS S
+        WHERE 
+                ST.name = INV.store_name AND ST.seller_email = 'gcordelle1@fastcompany.com');
+                 
+
+
+-- Finds the total number of IP Items purchased by a single buyer
+SELECT 
+        SUM(quantity) AS 'Total IP Items'
+FROM
+        PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no         AND PP.purchase_payment_id = PD.purchase_payment_id
+WHERE
+        P.buyer_email = 'hhobble4@hao123.com';
+
+
+-- Finds the buyer who has purchased the most IP Items and 
+-- the total number of IP Items they have purchased
+SELECT
+        buyer_email, MAX(Total_Items) AS Total_Items
+FROM
+        (SELECT 
+                P.buyer_email, SUM(quantity) AS Total_Items
+        FROM
+                PURCHASE AS P
+                INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+                INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        GROUP BY buyer_email);
+        
+        
+        
+        
+        
+        
+
+-- Extra Queries 
+        
+-- Finds the number of wishes given a particular buyer 
+SELECT 
+     COUNT(email)
+FROM
+      WISH 
+WHERE
+       email = 'livanyushkin12@canalblog.com';
+	
+
+-- Lists all Stores and their URLs even if they don’t have a URL
+SELECT
+        link, S.name
+FROM 
+         STORE AS S
+        LEFT OUTER JOIN URL AS U ON S.name = U.name;
+
+-- Finds the count of the product keywords for a given IP Item.
+SELECT
+         COUNT(word)
+FROM 
+         PRODUCT_KEYWORD AS PK
+WHERE
+        PK.product_id = 983;
+        
+        
+
+
+-- Advanced Queries 
+        
+-- Provides a list of buyer names, along with the total dollar amount each buyer has spent.
+        SELECT 
+                U.name, SUM(amount_spent) AS Spent
+        FROM
+                PURCHASE AS P
+                INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no
+               INNER JOIN BUYER AS B ON B.email = P.buyer_email
+                INNER JOIN USER AS U ON U.email = B.email 
+        GROUP BY buyer_email;
+
+
+
+
+-- Provides a list of buyer names and e-mail addresses for buyers who have spent more than 
+-- the average buyer.
+                
+SELECT 
+        U.name, U.email
+FROM 
+        USER AS U
+        INNER JOIN BUYER AS B ON U.email = B.email
+        INNER JOIN PURCHASE AS P ON B.email = P.buyer_email
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no
+GROUP BY 
+        B.email
+HAVING  
+        SUM(amount_spent) > (        
+        SELECT 
+                AVG(Spent)
+        FROM
+                (SELECT 
+                        U.name, SUM(amount_spent) AS Spent
+                FROM
+                        PURCHASE AS P
+                        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no
+            INNER JOIN BUYER AS B ON B.email = P.buyer_email
+                        INNER JOIN USER AS U ON U.email = B.email 
+                        GROUP BY buyer_email));
+
+-- Provides a list of the IP Item names and associated total copies sold to all buyers, sorted 
+-- from the IP Item that has sold the most individual copies to the IP Item that has sold the least.
+SELECT
+        title, SUM(PD.quantity) AS Total_Copies_Sold
+FROM 
+      PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+GROUP BY
+        title
+ORDER BY
+        SUM(PD.quantity) DESC;
+
+
+
+
+-- Provides a list of the IP Item names and associated dollar totals for copies sold to all
+-- buyers, sorted from the IP Item that has sold the highest dollar amount to the IP Item that has
+-- sold the smallest.
+SELECT 
+        title, SUM(amount_spent) AS Total_Amount_Spent
+FROM 
+        PURCHASE AS P
+INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+GROUP BY
+        title
+ORDER BY
+        SUM(amount_spent) DESC;
+
+
+        
+-- Finds the most popular Seller (i.e. the one who has sold the most IP Items)
+SELECT
+        S.email
+FROM 
+        PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+        INNER JOIN STORE AS ST ON INV.store_name = ST.name
+        INNER JOIN SELLER AS S ON S.email = ST.seller_email
+GROUP BY
+        S.email
+ORDER BY
+        SUM(PD.quantity) DESC
+LIMIT 1;
+
+
+
+
+-- Finds the most profitable seller (i.e. the one who has brought in the most money)
+SELECT
+        S.email
+FROM 
+     PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+      INNER JOIN STORE AS ST ON INV.store_name = ST.name
+        INNER JOIN SELLER AS S ON S.email = ST.seller_email
+GROUP BY S.email
+ORDER BY (SUM(PD.quantity) * buying_price) DESC
+LIMIT 1;
+
+
+
+
+-- Provides a list of buyer names for buyers who purchased anything listed by the most 
+-- profitable Seller.
+        SELECT 
+        email
+FROM 
+        BUYER AS B
+        INNER JOIN PURCHASE AS P ON B.email = P.buyer_email 
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no 
+        INNER JOIN INVENTORY AS INV on PD.product_id = INV.product_id
+WHERE 
+        INV.store_name IN 
+        (SELECT 
+                DISTINCT(name)
+        FROM 
+                INVENTORY AS INV, STORE AS ST, SELLER AS S
+        WHERE 
+                ST.name = INV.store_name AND ST.seller_email IN 
+        (SELECT
+                S.email
+                FROM 
+             PURCHASE AS P
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no 
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+                        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+                             INNER JOIN STORE AS ST ON INV.store_name = ST.name
+                        INNER JOIN SELLER AS S ON S.email = ST.seller_email
+                GROUP BY S.email
+                ORDER BY (SUM(PD.quantity) * buying_price) DESC
+        LIMIT 1));
+
+
+        
+-- Provides the list of sellers who listed the IP Items purchased by the buyers who have spent 
+-- more than the average buyer.
+SELECT 
+        email
+FROM 
+        (SELECT 
+        S.email
+FROM 
+        USER AS U
+        INNER JOIN BUYER AS B ON U.email = B.email
+        INNER JOIN PURCHASE AS P ON B.email = P.buyer_email
+        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no
+        INNER JOIN PURCHASE_DETAILS AS PD ON PP.confirmation_no = PD.confirmation_no AND PP.purchase_payment_id = PD.purchase_payment_id
+        INNER JOIN INVENTORY AS INV ON PD.product_id = INV.product_id
+                             INNER JOIN STORE AS ST ON INV.store_name = ST.name
+        INNER JOIN SELLER AS S ON ST.seller_email = S.email
+GROUP BY 
+        B.email
+HAVING  
+        SUM(amount_spent) > (        
+        SELECT 
+                AVG(Spent)
+        FROM
+                (SELECT 
+                        U.name, SUM(amount_spent) AS Spent
+                FROM
+                        PURCHASE AS P
+                        INNER JOIN PURCHASE_PAYMENT AS PP ON P.confirmation_no = PP.confirmation_no
+            INNER JOIN BUYER AS B ON B.email = P.buyer_email
+                        INNER JOIN USER AS U ON U.email = B.email 
+                        GROUP BY buyer_email)));

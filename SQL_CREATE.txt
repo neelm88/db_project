@@ -1,3 +1,11 @@
+-- SQL CREATE
+-- This text file contains all the scripts needed to create the database schema on an empty database. 
+-- It includes scripts to create tables, indexes, and views. 
+
+-- Scripts to create tables 
+
+-- Tables USER contains attributes email, name, address, and phone number.
+-- Primary key: email 
 CREATE TABLE [USER](
     email VARCHAR(80) NOT NULL,
     name VARCHAR(60),
@@ -7,6 +15,9 @@ CREATE TABLE [USER](
         PRIMARY KEY(email)
 );
 
+-- Table SELLER contains attributes email, bio, and photo.
+-- Primary key: email
+-- Foreign key: email references [USER](email).
 CREATE TABLE SELLER(
     email VARCHAR(80) NOT NULL,
     bio VARCHAR(255),
@@ -17,7 +28,9 @@ CREATE TABLE SELLER(
         FOREIGN KEY(email) REFERENCES [USER](email)
 			ON UPDATE CASCADE	ON DELETE CASCADE
 );
-
+-- Table BUYER contains attributes email, and karma_points.
+-- Primary key: email
+-- Foreign key: email references USER(email)
 CREATE TABLE BUYER(
     email VARCHAR(80) NOT NULL,
     karma_points INT NOT NULL DEFAULT 0,
@@ -28,6 +41,10 @@ CREATE TABLE BUYER(
             ON UPDATE CASCADE	ON DELETE CASCADE
 );
 
+-- Table WISH contains attributes wish_number, email, and product_id.
+-- Primary key: email, wish_number
+-- Foreign key: email references BUYER(email).
+-- Foreign key 2: product_id references INVENTORY(product_id).
 CREATE TABLE WISH(
     wish_number INT NOT NULL,
     email VARCHAR(80) NOT NULL,
@@ -42,6 +59,9 @@ CREATE TABLE WISH(
 			ON UPDATE NO ACTION		ON DELETE NO ACTION
 );
 
+-- Table STORE contains name, seller email, description, and banner. 
+-- Primary key: name
+-- Foreign key: seller references SELLER(email)
 CREATE TABLE STORE(
     name VARCHAR(255) NOT NULL,
     seller_email VARCHAR(80) NOT NULL,
@@ -54,16 +74,23 @@ CREATE TABLE STORE(
 			ON DELETE NO ACTION		ON UPDATE CASCADE
 );
 
+-- Table URL contains attributes link and name.
+-- Primary key: link, name
+-- Foreign key: name references STORE(name).
 CREATE TABLE URL(
     link VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
 	CONSTRAINT URLPK
 		PRIMARY KEY(link,name),
-    CONSTRAINT URLFK
+    	CONSTRAINT URLFK
         FOREIGN KEY(name) references STORE(name)
 			ON DELETE NO ACTION		ON UPDATE RESTRICT
 );
 
+-- Table INVENTORY contains product_id, quantity, file_type, file_size, description,
+-- buying_price, title, store_name, download_URL, and is_for_sale
+-- Primary key: product_id
+-- Foreign key: store_name references STORE(name)
 CREATE TABLE INVENTORY
 (	product_id INT NOT NULL,
 	quantity INT NOT NULL DEFAULT 0,
@@ -82,6 +109,9 @@ CREATE TABLE INVENTORY
 			ON DELETE NO ACTION		ON UPDATE RESTRICT		
 );
 		
+-- Table RENTAL contains product_id, duration, start date, and price.
+-- Primary key: product_id
+-- Foreign key: product_id references INVENTORY(product_id)
 CREATE TABLE RENTAL
 (	product_id INT NOT NULL,
 	duration VARCHAR(16) NOT NULL,
@@ -91,9 +121,13 @@ CREATE TABLE RENTAL
 		PRIMARY KEY(product_id),
 	CONSTRAINT RENTINVFK
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-			ON DELETE NO ACTION		ON UPDATE RESTRICT
+			ON DELETE CASCADE		ON UPDATE RESTRICT
 );
 
+-- Table SUBSCRIPTION contains attributes product_id, subscription_type, start_date, and
+-- price.
+-- Primary key: product_id
+-- Foreign key: product_id references INVENTORY(product_id).
 CREATE TABLE SUBSCRIPTION
 (	product_id INT NOT NULL,
 	subscription_type VARCHAR(16) NOT NULL,
@@ -103,9 +137,12 @@ CREATE TABLE SUBSCRIPTION
 		PRIMARY KEY(product_id),
 	CONSTRAINT SUBINVFK
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-			ON DELETE NO ACTION		ON UPDATE RESTRICT		
+			ON DELETE CASCADE		ON UPDATE RESTRICT		
 );
 
+-- Table IMAGE contains product_id and image file.
+-- Primary key: product_id
+-- Foreign key: product_id references INVENTORY(product_id)
 CREATE TABLE IMAGE
 (	product_id INT NOT NULL,
 	image_file VARCHAR(2048) NOT NULL,
@@ -113,15 +150,23 @@ CREATE TABLE IMAGE
 		PRIMARY KEY(product_id,image_file),
 	CONSTRAINT IMGINVFK
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-			ON DELETE NO ACTION		ON UPDATE RESTRICT		
+			ON DELETE CASCADE		ON UPDATE RESTRICT		
 );
 
+
+-- Table IP_TYPE contains word
+-- Primary key: word
 CREATE TABLE IP_TYPE
 (	word VARCHAR(32) NOT NULL,
 	CONSTRAINT IPTYPEPK
 		PRIMARY KEY(word)
 );
 
+
+-- Table PRODUCT_KEYWORD contains product_id and word.
+-- Primary key: product_id, word
+-- Foreign key: product_id references INVENTORY(product_id)
+-- Foreign key 2: word references IP_TYPE(word)
 CREATE TABLE PRODUCT_KEYWORD
 (	product_id INT NOT NULL,
 	word VARCHAR(32) NOT NULL,
@@ -132,9 +177,14 @@ CREATE TABLE PRODUCT_KEYWORD
 			ON DELETE NO ACTION 	ON UPDATE NO ACTION,
 	CONSTRAINT PROKEYINVFK
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-			ON DELETE NO ACTION 	ON UPDATE NO ACTION
+			ON DELETE CASCADE	ON UPDATE NO ACTION
 );
 
+-- Table FEEDBACK contains attributes comment_id, rating, comment, comment_time, 
+-- product_id, and email.
+-- Primary key: comment_id
+-- Foreign key: product_id references INVENTORY(product_id).
+-- Foreign key 2: email references BUYER(email).
 CREATE TABLE FEEDBACK
 (	comment_id INT NOT NULL,
 	rating INT NOT NULL,
@@ -146,12 +196,17 @@ CREATE TABLE FEEDBACK
 		PRIMARY KEY(comment_id),
 	CONSTRAINT FDBKINVFK
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-			ON DELETE NO ACTION ON UPDATE RESTRICT,
+			ON DELETE CASCADE ON UPDATE RESTRICT,
 	CONSTRAINT FDBKBYRFK
 		FOREIGN KEY(email) REFERENCES BUYER(email)
 			ON DELETE NO ACTION ON UPDATE RESTRICT
 );
 
+-- Table PURCHASE contains confirmation_no, receiver_email, gift, buyer_email,
+-- payment_id, and purchase_date.
+-- Primary key: confirmation_no
+-- Foreign key: payment_id references PAYMENT_METHOD(payment_id)
+-- Foreign key 2: buyer_email references BUYER(email)
 CREATE TABLE PURCHASE
 ( confirmation_no INT NOT NULL,
     receiver_email VARCHAR(128) NOT NULL,
@@ -161,23 +216,27 @@ CREATE TABLE PURCHASE
 	purchase_date DATETIME NOT NULL,
 	CONSTRAINT PURCHASEPK
 		PRIMARY KEY(confirmation_no),
-	CONSTRAINT PURCHASESUPERPK
+	CONSTRAINT PURCHASESUPERFK
 		FOREIGN KEY(payment_id) REFERENCES PAYMENT_METHOD(payment_id)
-			ON DELETE CASCADE	ON UPDATE NO ACTION,
+			ON DELETE NO ACTION	ON UPDATE NO ACTION,
 	CONSTRAINT PURCHASEBUYERFK
 		FOREIGN KEY(buyer_email) REFERENCES BUYER(email)
 			ON DELETE NO ACTION		ON UPDATE NO ACTION
 );
 
 
-
+-- Table PAYMENT_METHOD contains payment_id
+-- Primary key: payment_id
 CREATE TABLE PAYMENT_METHOD
 (	payment_id INT NOT NULL,
 	CONSTRAINT PAYMENTPK
 		PRIMARY KEY(payment_id)
 );
 
-
+-- Table CRYPTO_CURRENCY contains attributes payment_id, currency, and 
+-- account_number.
+-- Primary key: payment_id
+-- Foreign key: payment_id references PAYMENT_METHOD(payment_id).
 CREATE TABLE CRYPTO_CURRENCY
 (	payment_id INT NOT NULL,
 	currency VARCHAR(128) NOT NULL,
@@ -189,6 +248,9 @@ CREATE TABLE CRYPTO_CURRENCY
 			ON DELETE CASCADE ON UPDATE RESTRICT
 );
 
+-- Table KARMA_POINTS contains payment_id
+-- Primary key: payment_id
+-- Foreign key: payment_id references PAYMENT_METHOD(payment_id)
 CREATE TABLE KARMA_POINTS
 (	payment_id INT NOT NULL,
 	CONSTRAINT KPPK
@@ -199,6 +261,10 @@ CREATE TABLE KARMA_POINTS
 );
 
 
+-- Table CARD contains attributes payment_id, currency, security_number, expiration_date,
+-- and card_number.
+-- Primary key: payment_id
+-- Foreign key: payment_id references PAYMENT_METHOD(payment_id).
 CREATE TABLE CARD
 (	payment_id INT NOT NULL,
 	security_number INT NOT NULL,
@@ -213,6 +279,10 @@ CREATE TABLE CARD
 );
 
 
+-- Table PURCHASE_PAYMENT contains purchase_ payment_id, confirmation_no, and 
+-- amount_spent 
+-- Primary key: purchase_ payment_id and confirmation_no
+-- Foreign key:  confirmation_no references PURCHASE(confirmation_no)
 CREATE TABLE PURCHASE_PAYMENT
 ( 	purchase_payment_id INT NOT NULL,
 	confirmation_no INT NOT NULL,
@@ -224,11 +294,16 @@ CREATE TABLE PURCHASE_PAYMENT
 			ON DELETE CASCADE	ON UPDATE RESTRICT
 );
 
+-- Table PURCHASE_DETAILS contains attributes purchase_payment_id, confirmation_no,
+-- quantity, product_id, and comment_id.
+-- Primary key: purchase_payment_id, confirmation_no, and quantity.
+-- Foreign key: payment_id, confirmation_no references PURCHASE_PAYEMENT -- (purchase_payment_id, confirmation_no)
+-- Foreign key 2: product_id reference INVENTORY(product_id)
 CREATE TABLE PURCHASE_DETAILS
 ( 	purchase_payment_id INT NOT NULL,
 	confirmation_no INT NOT NULL,
 	quantity INT NOT NULL DEFAULT 1,
-	product_id INT NOT NULL,
+	product_id INT,
 	comment_id INT,
    CONSTRAINT PUR_DET 
 		PRIMARY KEY(purchase_payment_id, confirmation_no, quantity),
@@ -236,7 +311,31 @@ CREATE TABLE PURCHASE_DETAILS
 		FOREIGN KEY(purchase_payment_id, confirmation_no) REFERENCES PURCHASE_PAYMENT(purchase_payment_id,confirmation_no)
 				ON DELETE CASCADE 	ON UPDATE RESTRICT,
 		FOREIGN KEY(product_id) REFERENCES INVENTORY(product_id)
-				ON DELETE NO ACTION 	ON UPDATE RESTRICT,
+				ON DELETE SET NULL ON UPDATE RESTRICT,
 		FOREIGN KEY(comment_id) REFERENCES FEEDBACK(comment_id)
 				ON DELETE SET NULL	ON UPDATE RESTRICT
 );
+
+
+-- Scripts to create indexes
+CREATE INDEX stores
+ON INVENTORY (store_name);
+
+CREATE INDEX words
+ON PRODUCT_KEYWORD (word);
+
+
+-- Scripts to create views 
+CREATE VIEW [Wishes] AS
+SELECT B.email, COUNT(W.wish_number) AS "Number of Wishes"
+FROM BUYER AS B LEFT OUTER JOIN WISH AS W ON B.email = W.email
+GROUP BY B.email
+ORDER BY B.email ASC;
+
+CREATE VIEW [Average Ratings] AS
+SELECT I.product_id, I.title, AVG(F.rating) AS "Average Rating"
+FROM INVENTORY AS I INNER JOIN FEEDBACK AS F ON I.product_id = F.product_id
+GROUP BY I.product_id
+ORDER BY AVG(F.rating) DESC;
+
+

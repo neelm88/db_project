@@ -1,0 +1,15 @@
+Instructions 
+
+All the SQL files can be found in DB files folder. All the files have already been run and the final result
+can be seen in the BitsBots.db database. Open this database if you wish to see the final results of the
+following steps:
+
+1. Open a new database project
+2. Open and run the scripts in SQL_CREATE.txt to create tables, indexes, and views 
+3. Open and run the scripts in seed_data.txt to populate the tables and views 
+4. If there are any issues, run the scripts in delete_table.txt and return to step 2
+5. To generate indexes, open and run indexes.sql
+6. To generate views, open and run views.sql
+
+All the queries are located in the Queries folder. Note there are three files: SimpleQueries.txt, 
+ExtraQueries.txt, and AdvancedQueries.txt. Open and run these files to see their results. 
